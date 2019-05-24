@@ -45,7 +45,7 @@ public class CardController {
 //        return cards.stream()
 //                .filter(cards -> cards.get("id").equals(id))
 //                .findFirst()
-//                .orElseThrow(NotFoundExceprtion::new);
+//                .orElseThrow(NotFoundException::new);
 //    }
 //
 //    @PostMapping

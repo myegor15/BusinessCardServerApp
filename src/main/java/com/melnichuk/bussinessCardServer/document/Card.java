@@ -1,5 +1,6 @@
 package com.melnichuk.bussinessCardServer.document;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Card {
 
     @Id
-    private String id;
+    private ObjectId id;
 
     private String firstName;
     private String secondName;
@@ -27,7 +28,7 @@ public class Card {
     public Card() {
     }
 
-    public Card(String id, String firstName, String secondName, String lastName, String phoneNum1, String phoneNum2, String fax, String email, String company, String profession, String address, String web, String facebook, String twitter, String instagram) {
+    public Card(ObjectId id, String firstName, String secondName, String lastName, String phoneNum1, String phoneNum2, String fax, String email, String company, String profession, String address, String web, String facebook, String twitter, String instagram) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -45,11 +46,11 @@ public class Card {
         this.instagram = instagram;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
