@@ -29,4 +29,8 @@ public class CardService {
     public List<Card> findAll(){
         return repository.findAll();
     }
+
+    public void addCard(Card card) {
+        repository.save(card);
+    }
 }

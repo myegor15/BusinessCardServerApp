@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("cards")
+@RequestMapping("/cards")
 public class CardController {
 
     private final CardService service;
@@ -21,6 +21,11 @@ public class CardController {
     @GetMapping
     public List<Card> getAll(){
         return service.findAll();
+    }
+
+    @PostMapping
+    public void addCard(@RequestBody Card card) {
+        service.addCard(card);
     }
 
 //    private int counter = 4;
