@@ -19,27 +19,27 @@ public class CardController {
     }
 
     @GetMapping
-    public List<Card> getAll(@RequestHeader("username") String username){
-        return service.findAllCards(username);
+    public List<Card> getAll(){
+        return service.findAllCards();
     }
 
     @PostMapping("/one")
-    public void addOneCard(@RequestHeader("username") String username, @RequestBody Card card) {
-        service.addOneCard(username, card);
+    public void addOneCard(@RequestBody Card card) {
+        service.addOneCard(card);
     }
 
     @PostMapping
-    public void addAllCards(@RequestHeader("username") String username, @RequestBody List<Card> cards) {
-        service.addAllCards(username, cards);
+    public void addAllCards(@RequestBody List<Card> cards) {
+        service.addAllCards(cards);
     }
 
     @GetMapping("/personal")
-    public Card getPersonalCard(@RequestHeader("username") String username) {
-        return service.findPersonalCard(username);
+    public Card getPersonalCard() {
+        return service.findPersonalCard();
     }
 
     @PostMapping("/personal")
-    public void addPersonalCard(@RequestHeader("username") String username, @RequestBody Card card) {
-        service.addPersonalCard(username, card);
+    public void addPersonalCard(@RequestBody Card card) {
+        service.addPersonalCard(card);
     }
 }

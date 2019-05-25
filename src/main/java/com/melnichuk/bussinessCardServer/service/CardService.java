@@ -4,6 +4,7 @@ import com.melnichuk.bussinessCardServer.document.Card;
 import com.melnichuk.bussinessCardServer.document.Usr;
 import com.melnichuk.bussinessCardServer.repository.UsrRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,12 +34,12 @@ public class CardService {
 //    }
 
     //need rename
-    public List<Card> findAllCards(String username){
-        return repository.findByUsername(username).getAllCards();
+    public List<Card> findAllCards(){
+        return repository.findByUsername(getUsername()).getAllCards();
     }
 
-    public void addOneCard(String username, Card card) {
-        Usr usr = repository.findByUsername(username);
+    public void addOneCard(Card card) {
+        Usr usr = repository.findByUsername(getUsername());
         if (usr.getAllCards() == null) {
             usr.setAllCards(new ArrayList<>());
         }
@@ -47,21 +48,25 @@ public class CardService {
         repository.save(usr);
     }
 
-    public void addAllCards(String username, List<Card> cards) {
-        Usr usr = repository.findByUsername(username);
+    public void addAllCards(List<Card> cards) {
+        Usr usr = repository.findByUsername(getUsername());
         usr.setAllCards(cards);
         usr.setAllCardsLastUpdate(new Date());
         repository.save(usr);
     }
 
-    public Card findPersonalCard(String username) {
-        return repository.findByUsername(username).getPersonalCard();
+    public Card findPersonalCard() {
+        return repository.findByUsername(getUsername()).getPersonalCard();
     }
 
-    public void addPersonalCard(String username, Card card) {
-        Usr usr = repository.findByUsername(username);
+    public void addPersonalCard(Card card) {
+        Usr usr = repository.findByUsername(getUsername());
         usr.setPersonalCard(card);
         usr.setPersonalCardLastUpdate(new Date());
         repository.save(usr);
+    }
+
+    private String getUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
