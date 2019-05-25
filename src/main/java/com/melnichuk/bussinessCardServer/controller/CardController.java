@@ -19,63 +19,27 @@ public class CardController {
     }
 
     @GetMapping
-    public List<Card> getAll(){
-        return service.findAll();
+    public List<Card> getAll(@RequestHeader("username") String username){
+        return service.findAllCards(username);
+    }
+
+    @PostMapping("/one")
+    public void addOneCard(@RequestHeader("username") String username, @RequestBody Card card) {
+        service.addOneCard(username, card);
     }
 
     @PostMapping
-    public void addCard(@RequestBody Card card) {
-        service.addCard(card);
+    public void addAllCards(@RequestHeader("username") String username, @RequestBody List<Card> cards) {
+        service.addAllCards(username, cards);
     }
 
-//    private int counter = 4;
-//
-//    private List<Map<String, String>> cards = new ArrayList<Map<String, String>>(){{
-//        add(new HashMap<String, String>() {{put("id", "1"); put("text", "First card"); }});
-//        add(new HashMap<String, String>() {{put("id", "2"); put("text", "Second card"); }});
-//        add(new HashMap<String, String>() {{put("id", "3"); put("text", "Third card"); }});
-//    }};
-//
-//    @GetMapping
-//    public List<Map<String, String>> list(){
-//        return cards;
-//    }
-//
-//    @GetMapping("{id}")
-//    public Map<String, String> getOne(@PathVariable String id){
-//        return getCard(id);
-//    }
-//
-//    private Map<String, String> getCard(@PathVariable String id) {
-//        return cards.stream()
-//                .filter(cards -> cards.get("id").equals(id))
-//                .findFirst()
-//                .orElseThrow(NotFoundException::new);
-//    }
-//
-//    @PostMapping
-//    public Map<String, String> create(@RequestBody Map<String, String> card) {
-//        card.put("id", String.valueOf(counter++));
-//
-//        cards.add(card);
-//
-//        return card;
-//    }
-//
-//    @PutMapping("{id}")
-//    public Map<String, String> update(@PathVariable String id, @RequestBody Map<String, String> card){
-//        Map<String, String> cardFromDB = getCard(id);
-//
-//        cardFromDB.putAll(card);
-//        cardFromDB.put("id", id);
-//
-//        return cardFromDB;
-//    }
-//
-//    @DeleteMapping("{id}")
-//    public void delete(@PathVariable String id){
-//        Map<String, String> card = getCard(id);
-//
-//        cards.remove(card);
-//    }
+    @GetMapping("/personal")
+    public Card getPersonalCard(@RequestHeader("username") String username) {
+        return service.findPersonalCard(username);
+    }
+
+    @PostMapping("/personal")
+    public void addPersonalCard(@RequestHeader("username") String username, @RequestBody Card card) {
+        service.addPersonalCard(username, card);
+    }
 }

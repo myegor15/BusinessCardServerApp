@@ -1,17 +1,10 @@
 package com.melnichuk.bussinessCardServer.document;
 
 import lombok.Data;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
 @Data
 public class Card {
-
-    @Id
-    private ObjectId id;
-
+    private long id;
     private String firstName;
     private String secondName;
     private String lastName;
