@@ -3,12 +3,14 @@ package com.melnichuk.bussinessCardServer.service;
 import com.melnichuk.bussinessCardServer.document.Usr;
 import com.melnichuk.bussinessCardServer.repository.UsrRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 
@@ -36,7 +38,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public void addUser(Usr usr) {
-        usr.setPassword(bCryptPasswordEncoder.encode(usr.getPassword()));
-        usrRepository.save(usr);
+        if (usr.getUsername().length() >= 6 && usr.getPassword().length() >= 6) {
+            usr.setPassword(bCryptPasswordEncoder.encode(usr.getPassword()));
+            usrRepository.save(usr);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Short username or password");
+        }
     }
 }
