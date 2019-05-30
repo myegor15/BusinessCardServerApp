@@ -6,7 +6,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
 import java.util.List;
 
 @Document
@@ -21,9 +20,9 @@ public class Usr {
 
     private String password;
 
-    private Date personalCardLastUpdate;
+    private long personalCardLastUpdate;
     private Card personalCard;
 
-    private Date allCardsLastUpdate;
+    private long allCardsLastUpdate;
     private List<Card> allCards;
 }

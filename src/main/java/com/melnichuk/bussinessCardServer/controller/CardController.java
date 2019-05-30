@@ -24,13 +24,15 @@ public class CardController {
     }
 
     @PostMapping("/one")
-    public void addOneCard(@RequestBody Card card) {
-        service.addOneCard(card);
+    public void addOneCard(@RequestHeader("Update-Time") long time,
+                           @RequestBody Card card) {
+        service.addOneCard(time, card);
     }
 
     @PostMapping
-    public void addAllCards(@RequestBody List<Card> cards) {
-        service.addAllCards(cards);
+    public void addAllCards(@RequestHeader("Update-Time") long time,
+                            @RequestBody List<Card> cards) {
+        service.addAllCards(time, cards);
     }
 
     @GetMapping("/personal")
@@ -39,7 +41,13 @@ public class CardController {
     }
 
     @PostMapping("/personal")
-    public void addPersonalCard(@RequestBody Card card) {
-        service.addPersonalCard(card);
+    public void addPersonalCard(@RequestHeader("Update-Time") long time,
+                                @RequestBody Card card) {
+        service.addPersonalCard(time, card);
+    }
+
+    @GetMapping("/update")
+    public List<Long> getCardsLastUpdate() {
+        return service.findCardsLastUpdate();
     }
 }

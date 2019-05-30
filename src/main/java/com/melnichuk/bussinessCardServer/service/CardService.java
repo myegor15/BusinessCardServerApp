@@ -8,7 +8,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,20 +37,20 @@ public class CardService {
         return repository.findByUsername(getUsername()).getAllCards();
     }
 
-    public void addOneCard(Card card) {
+    public void addOneCard(long time, Card card) {
         Usr usr = repository.findByUsername(getUsername());
         if (usr.getAllCards() == null) {
             usr.setAllCards(new ArrayList<>());
         }
         usr.getAllCards().add(card);
-        usr.setAllCardsLastUpdate(new Date());
+        usr.setAllCardsLastUpdate(time);
         repository.save(usr);
     }
 
-    public void addAllCards(List<Card> cards) {
+    public void addAllCards(long time, List<Card> cards) {
         Usr usr = repository.findByUsername(getUsername());
         usr.setAllCards(cards);
-        usr.setAllCardsLastUpdate(new Date());
+        usr.setAllCardsLastUpdate(time);
         repository.save(usr);
     }
 
@@ -59,11 +58,19 @@ public class CardService {
         return repository.findByUsername(getUsername()).getPersonalCard();
     }
 
-    public void addPersonalCard(Card card) {
+    public void addPersonalCard(long time, Card card) {
         Usr usr = repository.findByUsername(getUsername());
         usr.setPersonalCard(card);
-        usr.setPersonalCardLastUpdate(new Date());
+        usr.setPersonalCardLastUpdate(time);
         repository.save(usr);
+    }
+
+    public List<Long> findCardsLastUpdate() {
+        List<Long> list = new ArrayList<>();
+        list.add(repository.findByUsername(getUsername()).getPersonalCardLastUpdate());
+        list.add(repository.findByUsername(getUsername()).getAllCardsLastUpdate());
+
+        return list;
     }
 
     private String getUsername() {
