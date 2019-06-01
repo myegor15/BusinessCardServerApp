@@ -73,6 +73,25 @@ public class CardService {
         return list;
     }
 
+    public List<Card> globalSearch(String name) {
+        List<Usr> usrList = repository.findAllByPersonalCard_FirstName(name);
+        usrList.addAll(repository.findAllByPersonalCard_LastName(name));
+        usrList.addAll(repository.findAllByPersonalCard_Company(name));
+//        usrList.remove(repository.findByUsername(getUsername()));
+        List<Card> cardList = new ArrayList<>();
+        usrList.forEach(usr -> {
+            Card card = new Card();
+            card.setFirstName(usr.getPersonalCard().getFirstName());
+            card.setSecondName(usr.getPersonalCard().getSecondName());
+            card.setLastName(usr.getPersonalCard().getLastName());
+            card.setCompany(usr.getPersonalCard().getCompany());
+            card.setEmail(usr.getPersonalCard().getEmail());
+            cardList.add(card);
+        });
+
+        return cardList;
+    }
+
     private String getUsername() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }

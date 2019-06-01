@@ -50,4 +50,9 @@ public class CardController {
     public List<Long> getCardsLastUpdate() {
         return service.findCardsLastUpdate();
     }
+
+    @GetMapping("/search")
+    public List<Card> getSearchResult(@RequestHeader("Search") String name) {
+        return service.globalSearch(name);
+    }
 }
