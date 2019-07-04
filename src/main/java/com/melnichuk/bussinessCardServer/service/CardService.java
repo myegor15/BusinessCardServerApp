@@ -66,9 +66,11 @@ public class CardService {
     }
 
     public List<Long> findCardsLastUpdate() {
+        Usr usr = repository.findByUsername(getUsername());
+
         List<Long> list = new ArrayList<>();
-        list.add(repository.findByUsername(getUsername()).getPersonalCardLastUpdate());
-        list.add(repository.findByUsername(getUsername()).getAllCardsLastUpdate());
+        list.add(usr.getPersonalCardLastUpdate());
+        list.add(usr.getAllCardsLastUpdate());
 
         return list;
     }
